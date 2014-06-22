@@ -42,6 +42,6 @@ fn main() {
     sorted_lines.sort_by(|a, b| b.cmp(a));
 
     for &(ref count, ref line) in sorted_lines.iter() {
-        print!("{}: {}", count, line);
+        print!("{} {}", count, line);
     }
 }
