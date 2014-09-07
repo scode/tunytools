@@ -28,7 +28,7 @@ fn main() {
     println!("count: {}", count);
     println!("sum:   {}", sum);
 
-    if (ns.is_empty()) {
+    if ns.is_empty() {
         println!("(empty set of numbers, remaining stats not available)");
     } else {
         println!("avg:   {}", sum/count as f64);
