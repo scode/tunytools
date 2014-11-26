@@ -33,7 +33,7 @@ fn main() {
     for line_or_fail in io::stdin().lines() {
         let entry = line_counts.entry(line_or_fail.unwrap());
         match entry {
-            Occupied(mut entry) => { *entry.get_mut() = *entry.get_mut() + 1; },
+            Occupied(mut entry) => { *entry.get_mut() += 1; },
             Vacant(entry) => { entry.set(1); },
         }
     }
