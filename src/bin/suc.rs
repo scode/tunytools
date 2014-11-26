@@ -17,25 +17,37 @@ fn main() {
         optflag("h", "help", "Show help.")
     ];
 
-    let matches = match getopts(args.tail(), opts) {
+    let matches = match getopts(args.tail(), &opts) {
         Ok(m) => { m }
-        Err(f) => { fail!(f.to_string()) }
+        Err(f) => { panic!(f.to_string()) }
     };
 
     if matches.opt_present("h") {
-        println!("{}", usage("Produce a sorted-by-frequency list of lines from input.", opts));
+        println!("{}", usage("Produce a sorted-by-frequency list of lines from input.", &opts));
         return;
     }
 
-    let mut lines: HashMap<String,int> = HashMap::new();
+    let mut line_counts: HashMap<String,int> = HashMap::new();
 
-    for line in io::stdin().lines() {
-        lines.insert_or_update_with(line.unwrap(), 1, |_k, v| *v = *v + 1);
+    for line_or_fail in io::stdin().lines() {
+        // XXX(scode): There is probably a much better way?
+        let line = line_or_fail.unwrap();
+        let existed = {
+            let existing_count = line_counts.get_mut(&line);
+            match existing_count {
+                None => { false },
+                Some(count) => { *count = *count + 1; true},
+            }
+        };
+
+        if !existed {
+            line_counts.insert(line, 1);
+        }
     }
 
     let mut sorted_lines: Vec<(int, String)> = Vec::new();
 
-    for (line, count) in lines.iter() {
+    for (line, count) in line_counts.iter() {
         sorted_lines.push((*count, line.clone()));
     }
 

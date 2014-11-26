@@ -12,7 +12,7 @@ fn main() {
         })
         .map(|n| match n {
             Some(x) => x,
-            None => fail!("borkage")
+            None => panic!("borkage")
         })
         .collect();
 
