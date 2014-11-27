@@ -20,10 +20,7 @@ fn main() {
 
     let count = ns.len();
 
-    let mut sum: f64 = 0.0; // no reduce in rust? searched, failed to find
-    for n in ns.iter() {
-        sum = sum + *n
-    }
+    let sum = ns.iter().fold(0.0, |a, &b| a + b);
 
     println!("count: {}", count);
     println!("sum:   {}", sum);
