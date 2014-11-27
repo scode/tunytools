@@ -34,9 +34,9 @@ fn main() {
         println!("avg:   {}", sum/count as f64);
         println!("max:   {}", ns[count - 1]);
         println!("p999:  {}", ns[ns.len() * 999/1000]);
-        println!("p99:  {}", ns[ns.len() * 99/100]);
-        println!("p90:  {}", ns[ns.len() * 90/100]);
-        println!("p50:  {}", ns[ns.len() * 50/100]);
+        println!("p99:   {}", ns[ns.len() * 99/100]);
+        println!("p90:   {}", ns[ns.len() * 90/100]);
+        println!("p50:   {}", ns[ns.len() * 50/100]);
         println!("min:   {}", ns[0]);
     }
 }
