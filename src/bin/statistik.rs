@@ -1,4 +1,3 @@
-//use std::os;
 use std::io;
 use std::num::from_str_radix;
 
