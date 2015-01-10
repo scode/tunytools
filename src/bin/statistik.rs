@@ -1,8 +1,10 @@
+use std::cmp;
 use std::io;
 use std::num::from_str_radix;
 
 fn main() {
     let mut ns: Vec<f64> = io::stdin()
+        .lock()
         .lines()
         .map(|l| from_str_radix::<f64>(l.unwrap().as_slice().trim(), 10))
         .filter(|o| match *o {
@@ -15,7 +17,7 @@ fn main() {
         })
         .collect();
 
-    ns.sort_by(|a, b| a.partial_cmp(b).unwrap_or(Equal));
+    ns.sort_by(|a, b| a.partial_cmp(b).unwrap_or(cmp::Ordering::Equal));
 
     let count = ns.len();
 

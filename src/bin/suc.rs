@@ -2,7 +2,7 @@ extern crate getopts;
 use std::os;
 use std::io;
 use std::collections::HashMap;
-use std::collections::hash_map::{Occupied, Vacant};
+use std::collections::hash_map::Entry;
 
 use getopts::getopts;
 use getopts::optflag;
@@ -28,17 +28,17 @@ fn main() {
         return;
     }
 
-    let mut line_counts: HashMap<String,int> = HashMap::new();
+    let mut line_counts: HashMap<String,isize> = HashMap::new();
 
-    for line_or_fail in io::stdin().lines() {
+    for line_or_fail in io::stdin().lock().lines() {
         let entry = line_counts.entry(line_or_fail.unwrap());
         match entry {
-            Occupied(mut entry) => { *entry.get_mut() += 1; },
-            Vacant(entry) => { entry.set(1); },
+            Entry::Occupied(mut entry) => { *entry.get_mut() += 1; },
+            Entry::Vacant(entry) => { entry.insert(1); },
         }
     }
 
-    let mut sorted_lines: Vec<(int, String)> = Vec::new();
+    let mut sorted_lines: Vec<(isize, String)> = Vec::new();
 
     for (line, count) in line_counts.iter() {
         sorted_lines.push((*count, line.clone()));
