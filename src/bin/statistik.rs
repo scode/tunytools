@@ -1,9 +1,9 @@
 use std::cmp;
-use std::io;
+use std::old_io;
 use std::num::from_str_radix;
 
 fn main() {
-    let mut ns: Vec<f64> = io::stdin()
+    let mut ns: Vec<f64> = old_io::stdin()
         .lock()
         .lines()
         .map(|l| from_str_radix::<f64>(l.unwrap().as_slice().trim(), 10))

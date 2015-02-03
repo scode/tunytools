@@ -1,6 +1,6 @@
 extern crate getopts;
 use std::os;
-use std::io;
+use std::old_io;
 use std::collections::HashMap;
 use std::collections::hash_map::Entry;
 
@@ -30,7 +30,7 @@ fn main() {
 
     let mut line_counts: HashMap<String,isize> = HashMap::new();
 
-    for line_or_fail in io::stdin().lock().lines() {
+    for line_or_fail in old_io::stdin().lock().lines() {
         let entry = line_counts.entry(line_or_fail.unwrap());
         match entry {
             Entry::Occupied(mut entry) => { *entry.get_mut() += 1; },
