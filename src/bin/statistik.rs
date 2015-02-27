@@ -3,17 +3,18 @@ use std::old_io;
 use std::num::from_str_radix;
 
 fn main() {
-    let mut ns: Vec<f64> = old_io::stdin()
+    let mut stdin = old_io::stdin();
+    let mut ns: Vec<f64> = stdin
         .lock()
         .lines()
         .map(|l| from_str_radix::<f64>(l.unwrap().as_slice().trim(), 10))
         .filter(|o| match *o {
-            Some(_) => true,
-            None => false,
+            Ok(_) => true,
+            Err(_) => false,
         })
         .map(|n| match n {
-            Some(x) => x,
-            None => panic!("borkage")
+            Ok(x) => x,
+            Err(_) => panic!("borkage")
         })
         .collect();
 

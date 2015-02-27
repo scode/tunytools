@@ -29,8 +29,8 @@ fn main() {
     }
 
     let mut line_counts: HashMap<String,isize> = HashMap::new();
-
-    for line_or_fail in old_io::stdin().lock().lines() {
+    let mut stdin = old_io::stdin();
+    for line_or_fail in stdin.lock().lines() {
         let entry = line_counts.entry(line_or_fail.unwrap());
         match entry {
             Entry::Occupied(mut entry) => { *entry.get_mut() += 1; },
