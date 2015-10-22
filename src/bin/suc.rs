@@ -1,35 +1,31 @@
 extern crate getopts;
-use std::os;
-use std::old_io;
+use getopts::Options;
 use std::collections::HashMap;
 use std::collections::hash_map::Entry;
+use std::env;
+use std::io;
+use std::io::BufRead;
 
-use getopts::getopts;
-use getopts::optflag;
-use getopts::usage;
+
 
 fn main() {
-    let args: Vec<String> = os::args()
-        .iter()
-        .map(|x| x.to_string())
-        .collect();
+    let args: Vec<String> = env::args().collect();
 
-    let opts = [
-        optflag("h", "help", "Show help.")
-    ];
+    let mut opts = Options::new();
+    opts.optflag("h", "help", "Show help.");
 
-    let matches = match getopts(args.tail(), &opts) {
+    let matches = match opts.parse(&args[1..]) {
         Ok(m) => { m }
         Err(f) => { panic!(f.to_string()) }
     };
 
     if matches.opt_present("h") {
-        println!("{}", usage("Produce a sorted-by-frequency list of lines from input.", &opts));
+        println!("{}", opts.usage("Produce a sorted-by-frequency list of lines from input."));
         return;
     }
 
     let mut line_counts: HashMap<String,isize> = HashMap::new();
-    let mut stdin = old_io::stdin();
+    let stdin = io::stdin();
     for line_or_fail in stdin.lock().lines() {
         let entry = line_counts.entry(line_or_fail.unwrap());
         match entry {

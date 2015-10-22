@@ -1,13 +1,13 @@
 use std::cmp;
-use std::old_io;
-use std::num::from_str_radix;
+use std::io;
+use std::io::BufRead;
 
 fn main() {
-    let mut stdin = old_io::stdin();
+    let stdin = io::stdin();
     let mut ns: Vec<f64> = stdin
         .lock()
         .lines()
-        .map(|l| from_str_radix::<f64>(l.unwrap().as_slice().trim(), 10))
+        .map(|l| l.unwrap().trim().parse::<f64>())
         .filter(|o| match *o {
             Ok(_) => true,
             Err(_) => false,
