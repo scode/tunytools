@@ -1,4 +1,3 @@
-use std::cmp;
 use std::io;
 use std::io::BufRead;
 use std::error::Error;
