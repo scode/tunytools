@@ -33,7 +33,7 @@ fn main() {
 }
 
 fn read_floats(input: &mut io::BufRead) -> Result<Vec<f64>, Box<Error>> {
-    let mut ns: Result<Vec<f64>, Box<Error>> = input
+    let ns: Result<Vec<f64>, Box<Error>> = input
         .lines()
         .map(|line| -> Result<f64, Box<Error>> {
             Ok(line?.parse::<f64>()?)
