@@ -9,11 +9,9 @@ fn main() {
         Err(e) => panic!("failed to read numbers: {}", e),
     };
 
-    ns.sort_by(|a, b| {
-        match a.partial_cmp(b) {
-            Some(o) => o,
-            None => panic!("cannot compare {} and {}, thus cannort sort them", a, b),
-        }
+    ns.sort_by(|a, b| match a.partial_cmp(b) {
+        Some(o) => o,
+        None => panic!("cannot compare {} and {}, thus cannort sort them", a, b),
     });
 
     let count = ns.len();
