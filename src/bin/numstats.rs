@@ -3,11 +3,15 @@ use std::io::BufRead;
 use std::error::Error;
 
 fn main() {
+    if let Err(e) = numstats() {
+        eprintln!("error: {}", e);
+        std::process::exit(1);
+    }
+}
+
+fn numstats() -> Result<(), Box<Error>> {
     let stdin = io::stdin();
-    let mut ns: Vec<f64> = match read_floats(&mut stdin.lock()) {
-        Ok(ns) => ns,
-        Err(e) => panic!("failed to read numbers: {}", e),
-    };
+    let mut ns: Vec<f64> = read_floats(&mut stdin.lock())?;
 
     ns.sort_by(|a, b| match a.partial_cmp(b) {
         Some(o) => o,
@@ -32,6 +36,8 @@ fn main() {
         println!("p50:   {}", ns[ns.len() * 50 / 100]);
         println!("min:   {}", ns[0]);
     }
+
+    Ok(())
 }
 
 fn read_floats(input: &mut io::BufRead) -> Result<Vec<f64>, Box<Error>> {
