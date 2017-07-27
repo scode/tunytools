@@ -1,22 +1,14 @@
 use std::cmp;
 use std::io;
 use std::io::BufRead;
+use std::error::Error;
 
 fn main() {
     let stdin = io::stdin();
-    let mut ns: Vec<f64> = stdin
-        .lock()
-        .lines()
-        .map(|l| l.unwrap().trim().parse::<f64>())
-        .filter(|o| match *o {
-            Ok(_) => true,
-            Err(_) => false,
-        })
-        .map(|n| match n {
-            Ok(x) => x,
-            Err(_) => panic!("borkage")
-        })
-        .collect();
+    let mut ns: Vec<f64> = match read_floats(&mut stdin.lock()) {
+        Ok(ns) => ns,
+        Err(e) => panic!("failed to read numbers: {}", e),
+    };
 
     ns.sort_by(|a, b| a.partial_cmp(b).unwrap_or(cmp::Ordering::Equal));
 
@@ -38,4 +30,15 @@ fn main() {
         println!("p50:   {}", ns[ns.len() * 50/100]);
         println!("min:   {}", ns[0]);
     }
+}
+
+fn read_floats(input: &mut io::BufRead) -> Result<Vec<f64>, Box<Error>> {
+    let mut ns: Result<Vec<f64>, Box<Error>> = input
+        .lines()
+        .map(|line| -> Result<f64, Box<Error>> {
+            Ok(line?.parse::<f64>()?)
+        })
+        .collect();
+
+    ns
 }
