@@ -1,7 +1,7 @@
-use std::io;
-use std::io::BufRead;
 use std::error::Error;
 use std::fmt;
+use std::io;
+use std::io::BufRead;
 
 /// For less verbose possibilities, see:
 ///
@@ -38,9 +38,9 @@ fn numstats() -> Result<(), Box<Error>> {
     let mut ns: Vec<f64> = read_floats(&mut stdin.lock())?;
 
     if ns.contains(&std::f64::NAN) {
-        return Err(Box::new(
-            InputError { desc: "NaN not supported".to_owned() },
-        ));
+        return Err(Box::new(InputError {
+            desc: "NaN not supported".to_owned(),
+        }));
     }
     sort_floats_by(&mut ns);
 
@@ -102,9 +102,7 @@ fn sort_floats_by(v: &mut Vec<f64>) {
 fn read_floats(input: &mut io::BufRead) -> Result<Vec<f64>, Box<Error>> {
     let ns: Result<Vec<f64>, Box<Error>> = input
         .lines()
-        .map(|line| -> Result<f64, Box<Error>> {
-            Ok(line?.parse::<f64>()?)
-        })
+        .map(|line| -> Result<f64, Box<Error>> { Ok(line?.parse::<f64>()?) })
         .collect();
 
     ns

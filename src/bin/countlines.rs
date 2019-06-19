@@ -1,12 +1,10 @@
 extern crate getopts;
 use getopts::Options;
-use std::collections::HashMap;
 use std::collections::hash_map::Entry;
+use std::collections::HashMap;
 use std::env;
 use std::io;
 use std::io::BufRead;
-
-
 
 fn main() {
     let args: Vec<String> = env::args().collect();
